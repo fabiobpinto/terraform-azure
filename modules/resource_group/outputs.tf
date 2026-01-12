@@ -8,6 +8,6 @@ output "location" {
 }
 
 output "rg_id" {
-  value = azurerm_resource_group.rg_main.id
+  value       = azurerm_resource_group.rg_main.id
   description = "The id of the resource group"
 }
