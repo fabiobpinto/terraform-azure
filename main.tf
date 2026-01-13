@@ -7,44 +7,29 @@ module "rg" {
 }
 
 # Virtual Network
-resource "azurerm_virtual_network" "vnet" {
-  name                = "VNET01"
-  address_space       = ["10.0.0.0/16"]
-  location            = module.rg.location
-  resource_group_name = module.rg.rg_name
-  tags                = var.tags
+module "network" {
+  source             = "./modules/virtual_network"
+  rg_name            = module.rg.rg_name
+  location           = module.rg.location
+  vnet_name          = var.vnet_name
+  vnet_address_space = var.vnet_address_space
+  subnets            = var.subnets
+  tags               = var.tags
 }
 
-# Virtual Subnet
-resource "azurerm_subnet" "subnet" {
-  name                 = "SUBNET01"
-  resource_group_name  = module.rg.rg_name
-  virtual_network_name = azurerm_virtual_network.vnet.name
-  address_prefixes     = ["10.0.1.0/24"]
-}
+# Network Security Group
+module "nsg" {
+  source = "./modules/nsg"
 
-# Public IP
-resource "azurerm_public_ip" "public_ip" {
-  name                = "PUBLICIP01"
-  resource_group_name = module.rg.rg_name
-  location            = module.rg.location
-  allocation_method   = "Static"
-  sku                 = "Standard"
-  tags                = var.tags
-}
+  for_each = var.subnets
 
-# Network Interface
-resource "azurerm_network_interface" "nic" {
-  name                = "NIC01"
-  location            = module.rg.location
-  resource_group_name = module.rg.rg_name
+  nsg_name = "nsg-${each.value.name}"
 
-  ip_configuration {
-    name                          = "IPCONFIG01"
-    subnet_id                     = azurerm_subnet.subnet.id
-    private_ip_address_allocation = "Dynamic"
-    public_ip_address_id          = azurerm_public_ip.public_ip.id
-  }
+  rg_name  = module.rg.rg_name
+  location = module.rg.location
+  tags     = var.tags
 
-  tags = var.tags
+  nsg_subnet_id = module.network.subnet_ids[each.key]
+
+  nsg_rules = var.nsg_rules[each.value.rule].rules
 }
