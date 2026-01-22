@@ -53,6 +53,12 @@ nsg_rules = {
       priority               = 1020
       direction              = "Inbound"
       destination_port_range = "443"
+    },
+    {
+      name                   = "Allow-SSH"
+      priority               = 1030
+      direction              = "Inbound"
+      destination_port_range = "22"
     }
   ]
 
@@ -62,6 +68,12 @@ nsg_rules = {
       priority               = 1010
       direction              = "Inbound"
       destination_port_range = "8080"
+    },
+    {
+      name                   = "Allow-SSH"
+      priority               = 1020
+      direction              = "Inbound"
+      destination_port_range = "22"
     }
   ]
 
@@ -74,38 +86,102 @@ nsg_rules = {
     }
   ]
 
-bastion = [
-  {
-    name                       = "Allow-HTTPS-In"
-    priority                   = 1010
-    direction                  = "Inbound"
-    destination_port_range     = "443"
-    source_address_prefix      = "Internet"
-    destination_address_prefix = "*"
-  },
-  {
-    name                       = "Allow-SSH-Out"
-    priority                   = 1110
-    direction                  = "Outbound"
-    destination_port_range     = "22"
-    source_address_prefix      = "*"
-    destination_address_prefix = "VirtualNetwork"
-  },
-  {
-    name                       = "Allow-RDP-Out"
-    priority                   = 1120
-    direction                  = "Outbound"
-    destination_port_range     = "3389"
-    source_address_prefix      = "*"
-    destination_address_prefix = "VirtualNetwork"
-  },
-  {
-    name                       = "Allow-Azure-Out"
-    priority                   = 1130
-    direction                  = "Outbound"
-    destination_port_range     = "443"
-    source_address_prefix      = "*"
-    destination_address_prefix = "AzureCloud"
+  bastion = [
+    {
+      name                       = "Allow-HTTPS-In"
+      priority                   = 1010
+      direction                  = "Inbound"
+      destination_port_range     = "443"
+      source_address_prefix      = "Internet"
+      destination_address_prefix = "*"
+    },
+    {
+      name                       = "Allow-SSH-Out"
+      priority                   = 1110
+      direction                  = "Outbound"
+      destination_port_range     = "22"
+      source_address_prefix      = "*"
+      destination_address_prefix = "VirtualNetwork"
+    },
+    {
+      name                       = "Allow-RDP-Out"
+      priority                   = 1120
+      direction                  = "Outbound"
+      destination_port_range     = "3389"
+      source_address_prefix      = "*"
+      destination_address_prefix = "VirtualNetwork"
+    },
+    {
+      name                       = "Allow-Azure-Out"
+      priority                   = 1130
+      direction                  = "Outbound"
+      destination_port_range     = "443"
+      source_address_prefix      = "*"
+      destination_address_prefix = "AzureCloud"
+    }
+  ]
+}
+
+#VMs
+# Virtual Machines
+admin_username = "adminfabio"
+
+vms_linux_app = {
+  linuxapp01 = {
+    admin_username                  = "adminfabio"
+    disable_password_authentication = false
+    name                            = "linuxapp01"
+    size                            = "Standard_DS1_v2"
+
+    source_image_reference = {
+      publisher = "RedHat"
+      offer     = "RHEL"
+      sku       = "9-lvm-gen2"
+      version   = "latest"
+    }
+
+    os_disk = {
+      caching              = "ReadWrite"
+      storage_account_type = "Premium_LRS"
+      disk_size_gb         = 64
+    }
+
+    nic_ip_configuration_name = "primary"
+    subnet_name               = "snet-prd-app"
+
+    nic_info = {
+      private_ip_address            = "10.0.11.10"
+      private_ip_address_allocation = "Static"
+    }
   }
-]
+}
+
+vms_linux_web = {
+  linuxweb01 = {
+    admin_username                  = "adminfabio"
+    disable_password_authentication = false
+    name                            = "linuxweb01"
+    size                            = "Standard_DS1_v2"
+
+    source_image_reference = {
+      publisher = "RedHat"
+      offer     = "RHEL"
+      sku       = "9-lvm-gen2"
+      version   = "latest"
+    }
+
+    os_disk = {
+      caching              = "ReadWrite"
+      storage_account_type = "Premium_LRS"
+      disk_size_gb         = 64
+    }
+
+    nic_ip_configuration_name = "primary"
+    subnet_name               = "snet-prd-web"
+
+    nic_info = {
+      private_ip_address            = "10.0.1.10"
+      private_ip_address_allocation = "Static"
+    }
+  }
 }

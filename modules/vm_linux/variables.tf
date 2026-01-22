@@ -8,52 +8,45 @@ variable "location" {
   description = "The Azure region where the resources will be deployed."
 }
 
-variable "vm_name" {
-  type        = string
-  description = "The name of the Linux virtual machine."
+variable "tags" {
+  type        = map(string)
+  description = "A map of tags to assign to the resource group."
 }
 
-variable "vm_size" {
-  type        = string
-  description = "The size of the Linux virtual machine."
+variable "vm_linux" {
+  type = object({
+    admin_username                  = string
+    admin_pass                  = string
+    vm_name                            = string
+    vm_size                            = string
+    disable_password_authentication = bool
+
+    os_disk = object({
+      caching              = string
+      storage_account_type = string
+      disk_size_gb         = optional(number, 30)
+    })
+
+    source_image_reference = object({
+      publisher = string
+      offer     = string
+      sku       = string
+      version   = string
+    })
+  })
+
 }
 
-variable "admin_username" {
-  type        = string
-  description = "The admin username for the Linux virtual machine."
-}
+####
+variable "nic_info" {
+  type = object({
+    name = string
+    ip_configuration = object({
+      name                                               = string
+      subnet_id                                          = optional(string, null)
+      private_ip_address_allocation                      = string
+      private_ip_address                                 = optional(string, null)
 
-variable "admin_pass" {
-  type        = string
-  description = "The admin password for the Linux virtual machine."
-}
-
-variable "subnet_id" {
-  type        = string
-  description = "The ID of the subnet where the network interface will be created."
-}
-
-variable "private_ip_address" {
-  type        = string
-  description = "The static private IP address to assign to the network interface."
-}
-
-variable "publisher" {
-  type        = string
-  description = "The publisher of the OS image."
-}
-
-variable "offer" {
-  type        = string
-  description = "The offer of the OS image."
-}
-
-variable "sku" {
-  type        = string
-  description = "The SKU of the OS image."
-}
-
-variable "version" {
-  type        = string
-  description = "The version of the OS image."
+    })
+  })
 }

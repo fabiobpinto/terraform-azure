@@ -45,8 +45,8 @@ variable "nsg_rules" {
     priority  = number
     direction = string
 
-    access    = optional(string, "Allow")
-    protocol  = optional(string, "Tcp")
+    access   = optional(string, "Allow")
+    protocol = optional(string, "Tcp")
 
     source_port_range      = optional(string, "*")
     destination_port_range = string
@@ -54,4 +54,75 @@ variable "nsg_rules" {
     source_address_prefix      = optional(string, "*")
     destination_address_prefix = optional(string, "*")
   })))
+}
+
+variable "admin_username" {
+  type        = string
+  description = "The admin username for the Linux virtual machine."
+}
+
+variable "admin_pass" {
+  type        = string
+  description = "The admin password for the Linux virtual machine."
+}
+
+variable "vms_linux_app" {
+  type = map(object({
+    admin_username                  = string
+    name                            = string
+    size                            = string
+    disable_password_authentication = bool
+
+    os_disk = object({
+      caching              = string
+      storage_account_type = string
+      disk_size_gb         = number
+    })
+
+    source_image_reference = object({
+      offer     = string
+      publisher = string
+      sku       = string
+      version   = string
+    })
+
+    nic_ip_configuration_name = string
+    subnet_name               = string
+
+    nic_info = object({
+      private_ip_address            = string
+      private_ip_address_allocation = string
+    })
+  }))
+}
+
+
+variable "vms_linux_web" {
+  type = map(object({
+    admin_username                  = string
+    name                            = string
+    size                            = string
+    disable_password_authentication = bool
+
+    os_disk = object({
+      caching              = string
+      storage_account_type = string
+      disk_size_gb         = number
+    })
+
+    source_image_reference = object({
+      offer     = string
+      publisher = string
+      sku       = string
+      version   = string
+    })
+
+    nic_ip_configuration_name = string
+    subnet_name               = string
+
+    nic_info = object({
+      private_ip_address            = string
+      private_ip_address_allocation = string
+    })
+  }))
 }
