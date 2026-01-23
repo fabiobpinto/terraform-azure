@@ -17,3 +17,11 @@ output "vms_app_private_ips" {
     vm_key => vm.nic_private_ip
   }
 }
+
+output "vms_app_public_ips" {
+  description = "IPs públicos das VMs app"
+  value = {
+    for vm_key, pip in module.public_ip_app :
+    vm_key => pip.public_ip_address
+  }
+}

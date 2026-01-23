@@ -73,6 +73,9 @@ variable "vms_linux_app" {
     size                            = string
     disable_password_authentication = bool
 
+    enable_public_ip = optional(bool)
+    pip_name         = optional(string)
+
     os_disk = object({
       caching              = string
       storage_account_type = string

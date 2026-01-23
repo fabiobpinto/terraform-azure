@@ -34,6 +34,21 @@ module "nsg" {
   nsg_rules = var.nsg_rules[each.value.rule]
 }
 
+# Public IP
+module "public_ip_app" {
+  source = "./modules/public_ip"
+
+  for_each = {
+    for k, v in var.vms_linux_app : k => v
+    if try(v.enable_public_ip, false)
+  }
+
+  rg_name  = module.rg.rg_name
+  location = module.rg.location
+  tags     = var.tags
+  pip_name = "${each.key}-pip"
+}
+
 module "vms_app" {
   source   = "./modules/vm_linux"
   location = var.location
@@ -69,7 +84,18 @@ module "vms_app" {
       subnet_id                     = module.network.subnet_ids["app"]
       private_ip_address_allocation = each.value.nic_info.private_ip_address_allocation
       private_ip_address            = each.value.nic_info.private_ip_address
+      public_ip_id                  = try(module.public_ip_app[each.key].public_ip_id, null)
     }
+  }
+  public_ip_id = try(module.public_ip_app[each.key].public_ip_id, null)
+
+  auto_shutdown = {
+    enabled        = true
+    time           = "1800"
+    timezone       = "E. South America Standard Time"
+    notify         = false
+    notify_minutes = 30
+    email          = null
   }
 }
 
@@ -109,5 +135,13 @@ module "vms_web" {
       private_ip_address_allocation = each.value.nic_info.private_ip_address_allocation
       private_ip_address            = each.value.nic_info.private_ip_address
     }
+  }
+  auto_shutdown = {
+    enabled        = true
+    time           = "1800"
+    timezone       = "E. South America Standard Time"
+    notify         = false
+    notify_minutes = 30
+    email          = null
   }
 }

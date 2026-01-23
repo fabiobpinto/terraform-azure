@@ -132,6 +132,8 @@ vms_linux_app = {
     disable_password_authentication = false
     name                            = "linuxapp01"
     size                            = "Standard_DS1_v2"
+    enable_public_ip                = true
+    pip_name                        = "linuxapp01-pip"
 
     source_image_reference = {
       publisher = "RedHat"

@@ -16,9 +16,9 @@ variable "tags" {
 variable "vm_linux" {
   type = object({
     admin_username                  = string
-    admin_pass                  = string
-    vm_name                            = string
-    vm_size                            = string
+    admin_pass                      = string
+    vm_name                         = string
+    vm_size                         = string
     disable_password_authentication = bool
 
     os_disk = object({
@@ -42,11 +42,37 @@ variable "nic_info" {
   type = object({
     name = string
     ip_configuration = object({
-      name                                               = string
-      subnet_id                                          = optional(string, null)
-      private_ip_address_allocation                      = string
-      private_ip_address                                 = optional(string, null)
+      name                          = string
+      subnet_id                     = optional(string, null)
+      private_ip_address_allocation = string
+      private_ip_address            = optional(string, null)
 
     })
   })
+}
+
+variable "public_ip_id" {
+  type    = string
+  default = null
+}
+
+variable "auto_shutdown" {
+  description = "Configuração de auto-shutdown da VM"
+  type = object({
+    enabled        = bool
+    time           = string
+    timezone       = string # Ex: "E. South America Standard Time"
+    notify         = bool
+    notify_minutes = number
+    email          = string
+  })
+
+  default = {
+    enabled        = false
+    time           = "1800"
+    timezone       = "E. South America Standard Time"
+    notify         = false
+    notify_minutes = 30
+    email          = null
+  }
 }
