@@ -136,8 +136,6 @@ vms_linux_app = {
     enable_public_ip                = true
     pip_name                        = "linuxapp01-pip"
 
-    # enable_bootstrap = false
-
     source_image_reference = {
       publisher = "RedHat"
       offer     = "RHEL"
@@ -168,8 +166,6 @@ vms_linux_web = {
     name                            = "linuxweb01"
     computer_name                   = "linuxweb01"
     size                            = "Standard_DS1_v2"
-
-    # enable_bootstrap = true
 
     source_image_reference = {
       publisher = "Canonical"

@@ -85,7 +85,6 @@ module "vms_app" {
       subnet_id                     = module.network.subnet_ids["app"]
       private_ip_address_allocation = each.value.nic_info.private_ip_address_allocation
       private_ip_address            = each.value.nic_info.private_ip_address
-      public_ip_id                  = try(module.public_ip_app[each.key].public_ip_id, null)
     }
   }
   public_ip_id = try(module.public_ip_app[each.key].public_ip_id, null)
