@@ -21,7 +21,7 @@ O acesso às VMs é realizado exclusivamente via **Azure Bastion**, utilizando *
 
 📐 Diagrama da arquitetura:
 
-![Azure Bastion Architecture](../../docs/bastion-architecture.png)
+![Azure Bastion Architecture](https://github.com/fabiobpinto/terraform-azure/blob/main/docs/bastion-architecture.png)
 
 ---
 
