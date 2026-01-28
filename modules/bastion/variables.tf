@@ -38,7 +38,7 @@ variable "bastion" {
     scale_units               = optional(number, 2)
     session_recording_enabled = optional(bool, false)
     shareable_link_enabled    = optional(bool, false)
-    sku                       = optional(string, "Basic")
+    sku                       = optional(string, "Standard")
     tunneling_enabled         = optional(bool, false)
     virtual_network_id        = optional(string, null)
     zones                     = optional(list(string), [])

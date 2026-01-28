@@ -165,7 +165,7 @@ vms_linux_web = {
     name                            = "linuxweb01"
     computer_name                   = "linuxweb01"
     size                            = "Standard_DS1_v2"
-    enable_public_ip                = true
+    enable_public_ip                = false
 
     source_image_reference = {
       publisher = "Canonical"

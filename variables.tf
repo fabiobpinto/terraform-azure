@@ -98,6 +98,7 @@ variable "vms_linux_app" {
       private_ip_address_allocation = string
     })
   }))
+  description = "Configuration object for the Linux virtual machine."
 }
 
 
@@ -133,11 +134,11 @@ variable "vms_linux_web" {
       private_ip_address_allocation = string
     })
   }))
+  description = "Configuration object for the Linux virtual machine."
 }
 
 # Bastion Host Configuration - Depending of type of SKU, some features may not be available
 variable "bastion" {
-  description = "Configuration object for the bastion host."
   type = map(object({
     copy_paste_enabled        = optional(bool, true)
     file_copy_enabled         = optional(bool, false)
@@ -146,9 +147,10 @@ variable "bastion" {
     scale_units               = optional(number, 2)
     session_recording_enabled = optional(bool, false)
     shareable_link_enabled    = optional(bool, false)
-    sku                       = optional(string, "Basic")
+    sku                       = optional(string, "Standard")
     tunneling_enabled         = optional(bool, false)
     virtual_network_id        = optional(string, null)
     zones                     = optional(list(string), [])
   }))
+  description = "Configuration object for the bastion host."
 }

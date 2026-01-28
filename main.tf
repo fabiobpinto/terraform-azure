@@ -1,4 +1,6 @@
-# Resource Group
+########################################################################
+### Resource Group
+########################################################################
 module "rg" {
   source   = "./modules/resource_group"
   rg_name  = var.rg_name
@@ -7,7 +9,7 @@ module "rg" {
 }
 
 ########################################################################
-# Virtual Network
+### Virtual Network
 ########################################################################
 module "network" {
   source             = "./modules/virtual_network"
@@ -18,8 +20,9 @@ module "network" {
   subnets            = var.subnets
   tags               = var.tags
 }
+
 ########################################################################
-# Network Security Group
+### Network Security Group
 ########################################################################
 module "nsg" {
   source = "./modules/nsg"
@@ -38,9 +41,8 @@ module "nsg" {
 }
 
 ########################################################################
-# Public IP
+### Vms Public IP
 ########################################################################
-
 module "public_ip_app" {
   source = "./modules/public_ip"
 
@@ -55,7 +57,6 @@ module "public_ip_app" {
   pip_name = "${each.key}-pip"
 }
 
-# Public IP
 module "public_ip_web" {
   source = "./modules/public_ip"
 
@@ -71,23 +72,21 @@ module "public_ip_web" {
 }
 
 ########################################################################
-### Bastion - IGNORE ###
+### Bastion Public IP
 ########################################################################
-# # Public IP Bastion
-# module "public_ip_bastion" {
-#   source = "./modules/public_ip"
-#   for_each = var.bastion
-#   rg_name  = module.rg.rg_name
-#   location = module.rg.location
-#   tags     = var.tags
-#   pip_name = "${each.key}-pip"
-# }
+module "public_ip_bastion" {
+  source   = "./modules/public_ip"
+  for_each = var.bastion
+  rg_name  = module.rg.rg_name
+  location = module.rg.location
+  tags     = var.tags
+  pip_name = "${each.key}-pip"
+}
 
 
 ########################################################################
-# Virtual Machines Linux
+### Virtual Machines Linux
 ########################################################################
-
 module "vms_app" {
   source   = "./modules/vm_linux"
   location = var.location
@@ -128,6 +127,7 @@ module "vms_app" {
 
     }
   }
+
   public_ip_id = try(module.public_ip_app[each.key].public_ip_id, null)
 
   auto_shutdown = {
@@ -139,7 +139,6 @@ module "vms_app" {
     email          = null
   }
 }
-
 
 
 module "vms_web" {
@@ -195,21 +194,20 @@ module "vms_web" {
 
 
 ########################################################################
-### Bastion - IGNORE ###
+### Bastion Service
 ########################################################################
-# # Bastion Host
-# module "bastion_host" {
-#   source   = "./modules/bastion"
-#   location = module.rg.location
-#   rg_name  = module.rg.rg_name
-#   tags     = var.tags
-#   for_each = var.bastion
-#   bastion_name        = each.key
-#   bastion_subnet_id   = module.network.subnet_ids["bastion"]
-#   public_ip_address_id = module.public_ip_bastion[each.key].public_ip_id
-#   bastion = {
-#     scale_units               = each.value.scale_units
-#     sku                       = each.value.sku
-#   }
-# }
+module "bastion_host" {
+  source               = "./modules/bastion"
+  location             = module.rg.location
+  rg_name              = module.rg.rg_name
+  tags                 = var.tags
+  for_each             = var.bastion
+  bastion_name         = each.key
+  bastion_subnet_id    = module.network.subnet_ids["bastion"]
+  public_ip_address_id = module.public_ip_bastion[each.key].public_ip_id
+  bastion = {
+    scale_units = each.value.scale_units
+    sku         = each.value.sku
+  }
+}
 ########################################################################

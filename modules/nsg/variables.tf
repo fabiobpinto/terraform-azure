@@ -24,7 +24,7 @@ variable "nsg_subnet_id" {
 }
 
 variable "nsg_rules" {
-  description = "Lista de regras do NSG"
+  description = "NSG rules by subnet type"
   type = list(object({
     name      = string
     priority  = number

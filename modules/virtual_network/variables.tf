@@ -14,11 +14,13 @@ variable "tags" {
 }
 
 variable "vnet_name" {
-  type = string
+  type        = string
+  description = "The Vnet name"
 }
 
 variable "vnet_address_space" {
-  type = list(string)
+  type        = list(string)
+  description = "The address space for the virtual network."
 }
 
 variable "subnets" {
@@ -26,4 +28,5 @@ variable "subnets" {
     name             = string
     address_prefixes = list(string)
   }))
+  description = "The address space of Subnets"
 }

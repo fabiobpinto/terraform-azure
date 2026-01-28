@@ -35,7 +35,7 @@ variable "vm_linux" {
       version   = string
     })
   })
-
+  description = "Configuration object for the Linux virtual machine."
 }
 
 variable "nic_info" {
@@ -49,15 +49,16 @@ variable "nic_info" {
 
     })
   })
+  description = "Configuration object for the Network Interface Card (NIC)."
 }
 
 variable "public_ip_id" {
-  type    = string
-  default = null
+  type        = string
+  default     = null
+  description = "The ID of the Public IP to associate with the VM's NIC."
 }
 
 variable "auto_shutdown" {
-  description = "Configuração de auto-shutdown da VM"
   type = object({
     enabled        = bool
     time           = string
@@ -66,4 +67,5 @@ variable "auto_shutdown" {
     notify_minutes = number
     email          = string
   })
+  description = "Configuration object for the VM auto-shutdown feature."
 }
