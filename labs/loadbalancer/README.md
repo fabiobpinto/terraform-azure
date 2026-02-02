@@ -1,27 +1,16 @@
-# Terraform Azure Bastion Lab
+# Terraform Azure Loadbalancer Lab
 
-Este laboratório tem como objetivo demonstrar, de forma prática, o uso do **Terraform** para provisionar uma arquitetura segura no **Microsoft Azure**, utilizando **Azure Virtual Network**, **Network Security Group**, **Linux Virtual Machines** e **Azure Bastion Service**.
 
-O foco do lab é aplicar **boas práticas de Infraestrutura como Código (IaC)**, organização de módulos e acesso seguro às VMs **sem exposição de IP público**.
-
-Caso queira acessar o servidor pelo ip publico basta habilitar o parametro **enable_public_ip** nas variaveis da VM.
 
 ---
 
 ## 🧱 Arquitetura do Lab
 
-A infraestrutura é composta por uma **VNET segmentada em múltiplas subnets**, seguindo um modelo multi-tier:
 
-- Bastion Subnet (Azure Bastion Service)
-- Web Subnet (Web VM)
-- App Subnet (App VM)
-- DB Subnet (reservada para expansão)
-
-O acesso às VMs é realizado exclusivamente via **Azure Bastion**, utilizando **HTTPS (porta 443)** através do Azure Portal.
 
 📐 Diagrama da arquitetura:
 
-![Azure Bastion Architecture](https://github.com/fabiobpinto/terraform-azure/blob/main/docs/bastion-architecture.png)
+![Azure Loadbalancer Architecture](https://github.com/fabiobpinto/terraform-azure/blob/main/docs/loadbalancer-architecture.png)
 
 ---
 
@@ -31,7 +20,6 @@ O acesso às VMs é realizado exclusivamente via **Azure Bastion**, utilizando *
 - Implementar **Network Security Groups (NSG)** por subnet
 - Provisionar **Linux Virtual Machines** sem IP público
 - Utilizar **cloud-init (`custom_data`)** para bootstrap das VMs
-- Implementar **Azure Bastion Service** para acesso seguro
 - Organizar o código usando **modules reutilizáveis** e **labs independentes**
 
 ---
@@ -41,7 +29,7 @@ O acesso às VMs é realizado exclusivamente via **Azure Bastion**, utilizando *
 ```text
 .
 ├── labs
-│   └── bastion
+│   └── loadbalancer
 │       ├── main.tf
 │       ├── provider.tf
 │       ├── variables.tf
@@ -49,6 +37,7 @@ O acesso às VMs é realizado exclusivamente via **Azure Bastion**, utilizando *
 │       └── output.tf
 └── modules
     ├── bastion
+    ├── loadbalancer
     ├── resource_group
     ├── virtual_network
     ├── nsg
@@ -85,7 +74,6 @@ terraform apply -var-file="prd.tfvars"
 - Verificar criação da VNET e subnets no Azure Portal
 - Validar NSGs associados às subnets
 - Verificar Azure Bastion Service ativo
-- Conectar nas VMs via Bastion (SSH) pelo portal
 
 ---
 
