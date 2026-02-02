@@ -41,37 +41,6 @@ module "nsg" {
 }
 
 ########################################################################
-### Vms Public IP
-########################################################################
-module "public_ip_app" {
-  source = "../../modules/public_ip"
-
-  for_each = {
-    for k, v in var.vms_linux_app : k => v
-    if try(v.enable_public_ip, false)
-  }
-
-  rg_name  = module.rg.rg_name
-  location = module.rg.location
-  tags     = var.tags
-  pip_name = "${each.key}-pip"
-}
-
-module "public_ip_web" {
-  source = "../../modules/public_ip"
-
-  for_each = {
-    for k, v in var.vms_linux_web : k => v
-    if try(v.enable_public_ip, false)
-  }
-
-  rg_name  = module.rg.rg_name
-  location = module.rg.location
-  tags     = var.tags
-  pip_name = "${each.key}-pip"
-}
-
-########################################################################
 ### Bastion Public IP
 ########################################################################
 module "public_ip_bastion" {
@@ -95,6 +64,8 @@ module "vms_app" {
 
   for_each = var.vms_linux_app
 
+enable_public_ip = try(each.value.enable_public_ip, false)
+
   vm_linux = {
     admin_username                  = each.value.admin_username
     admin_pass                      = var.admin_pass
@@ -102,7 +73,6 @@ module "vms_app" {
     vm_name                         = each.value.name
     computer_name                   = each.value.computer_name
     vm_size                         = each.value.size
-    enable_public_ip                = try(each.value.enable_public_ip, false)
 
     os_disk = {
       caching              = each.value.os_disk.caching
@@ -124,11 +94,8 @@ module "vms_app" {
       subnet_id                     = module.network.subnet_ids["app"]
       private_ip_address_allocation = each.value.nic_info.private_ip_address_allocation
       private_ip_address            = each.value.nic_info.private_ip_address
-
     }
   }
-
-  public_ip_id = try(module.public_ip_app[each.key].public_ip_id, null)
 
   auto_shutdown = {
     enabled        = true
@@ -148,6 +115,8 @@ module "vms_web" {
   rg_name  = module.rg.rg_name
 
   for_each = var.vms_linux_web
+
+  enable_public_ip = try(each.value.enable_public_ip, false)
 
   vm_linux = {
     admin_username                  = each.value.admin_username
@@ -180,7 +149,6 @@ module "vms_web" {
     }
   }
 
-  public_ip_id = try(module.public_ip_web[each.key].public_ip_id, null)
 
   auto_shutdown = {
     enabled        = true

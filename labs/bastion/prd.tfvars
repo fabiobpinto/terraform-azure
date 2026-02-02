@@ -1,4 +1,4 @@
-rg_name  = "rg-prd-real-world"
+rg_name  = "rg-prd-bastion"
 location = "East US"
 ########################################################################
 ### Tags to apply to all resources
@@ -133,7 +133,6 @@ vms_linux_app = {
     computer_name                   = "linuxapp01"
     size                            = "Standard_DS1_v2"
     enable_public_ip                = false
-    pip_name                        = "linuxapp01-pip"
 
     source_image_reference = {
       publisher = "RedHat"

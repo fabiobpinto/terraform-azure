@@ -1,7 +1,3 @@
-output "rg-name" {
-  value = module.rg.rg_name
-}
-
 output "vms_web_private_ips" {
   description = "IPs privados das VMs web"
   value = {
@@ -19,18 +15,20 @@ output "vms_app_private_ips" {
 }
 
 output "vms_app_public_ips" {
-  description = "IPs públicos das VMs app"
+  description = "IPs públicos das VMs Ansible"
   value = {
-    for vm_key, pip in module.public_ip_app :
-    vm_key => pip.public_ip_address
+    for k, v in module.vms_app :
+    k => v.public_ip_address
+    if v.public_ip_address != null
   }
 }
 
 output "vms_web_public_ips" {
-  description = "IPs públicos das VMs web"
+  description = "IPs públicos das VMs Web"
   value = {
-    for vm_key, pip in module.public_ip_web :
-    vm_key => pip.public_ip_address
+    for k, v in module.vms_web :
+    k => v.public_ip_address
+    if v.public_ip_address != null
   }
 }
 

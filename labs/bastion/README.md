@@ -23,6 +23,8 @@ O acesso às VMs é realizado exclusivamente via **Azure Bastion**, utilizando *
 
 ![Azure Bastion Architecture](https://github.com/fabiobpinto/terraform-azure/blob/main/docs/bastion-architecture.png)
 
+[Azure Bastion Doc](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/bastion_host)
+
 ---
 
 ## 🎯 Objetivos do Laboratório
