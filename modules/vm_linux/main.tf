@@ -1,3 +1,15 @@
+resource "azurerm_public_ip" "pip" {
+  count = var.enable_public_ip ? 1 : 0
+
+  name                = "${var.vm_linux.vm_name}-pip"
+  resource_group_name = var.rg_name
+  location            = var.location
+  allocation_method   = "Static"
+  sku                 = "Standard"
+
+  tags = var.tags
+}
+
 resource "azurerm_network_interface" "nic_linux" {
   name                = "linux-nic-${var.vm_linux.vm_name}"
   location            = var.location
@@ -9,7 +21,7 @@ resource "azurerm_network_interface" "nic_linux" {
     private_ip_address_allocation = var.nic_info.ip_configuration.private_ip_address_allocation
     private_ip_address            = var.nic_info.ip_configuration.private_ip_address
 
-    public_ip_address_id = var.public_ip_id
+    public_ip_address_id = var.enable_public_ip ? azurerm_public_ip.pip[0].id : null
 
   }
 }

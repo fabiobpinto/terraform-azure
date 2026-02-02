@@ -52,6 +52,12 @@ variable "nic_info" {
   description = "Configuration object for the Network Interface Card (NIC)."
 }
 
+variable "enable_public_ip" {
+  type    = bool
+  default = false
+  description = "Enable Public IP"
+}
+
 variable "public_ip_id" {
   type        = string
   default     = null
