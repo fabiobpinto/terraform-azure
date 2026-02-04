@@ -9,12 +9,13 @@ packages:
   - tar
 
 users:
+  - default
   - name: useransible
     gecos: User Ansible
     shell: /bin/bash
     sudo: ALL=(ALL) NOPASSWD:ALL
     ssh_authorized_keys:
-      - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQDX5s/UxV3mZi+TFVuyDSn1gkMNm1ei/t6WjKk2SatSIRZmRT5GddGbIJuAYuN02Qfzpcr6hJCrJUB8G5e62404WE5yuasNlmBPhXYYM+6y7ahDzb1F+607626bkuydvTu6hGVJQ6QLf+i9RaKo/KxHKFCkSQINTOudlGtqH6ayCAnmGRe1DNBE10qky2eBKFmBRLDOlHs/HktvImfWVo1FaA0PhaszD78ymJb2VWrnyQo/idZWsHUI0Pm3PEtuR2k88v0166V3QhW3gsjZg5oNQs6AjimzmnC3imMBSsIsxT1CBc1+HSSLVuyCFAV6smIydPy+YMh3P8hI0O4QkM+dH98QY77nlF/o1NxnbqCItYt3h6kPqAG6wHmuYd+4cShwNwNzonUGFa2z7wyYB14B1Oepn94xwNxelvWVXJrN2Uu1CTgS9rRNPfcfWnkgLOifVNlUFTzDitbikkMz0blbLega0DXybGzNqRLQwz4skaMIAeruSa08uOCt2levqhFscGr5WQglyoUSTfnx5HaHBS/3XO47Hmz2EgSEBWL8FM50utQMiFA5+2sLDSUjGWKAOPKQ3T1MibO7PKrYEe692b4FnLUOWM+uAw5WrIMrzg+C9X76hIvftDeaVUp/5plFGYIb66IW15FJsuX4PX6n3dI1Uk+MYF8gF+spqFlAHw== useransible
+      - ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIGiftpR8WLYW8UQ2EMeCLS4sc0Zwucwoh0KE2lWm0rTr useransible
 
 # ssh_pwauth: false --- IGNORE --- Disable password authentication
 disable_root: true
