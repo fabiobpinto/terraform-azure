@@ -114,3 +114,13 @@ vms_linux_web = {
     }
   }
 }
+
+########################################################################
+# Load Balancer
+########################################################################
+loadbalancer = {
+  lb-web = {
+    sku                            = "Standard"
+    frontend_ip_configuration_name = "frontend-ip-config"
+  }
+}

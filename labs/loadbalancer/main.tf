@@ -109,3 +109,37 @@ module "public_ip_loadbalancer" {
 ########################################################################
 ### LoadBalancer
 ########################################################################
+module "loadbalancer" {
+  source = "../../modules/loadbalancer"
+
+  for_each = var.loadbalancer
+
+  rg_name  = module.rg.rg_name
+  location = module.rg.location
+  tags     = var.tags
+
+  lb_name                        = each.key
+  sku                            = each.value.sku
+  frontend_ip_configuration_name = each.value.frontend_ip_configuration_name
+  public_ip_address_id           = module.public_ip_loadbalancer[each.key].public_ip_id
+}
+
+########################################################################
+### LoadBalancer Backend Pool Association
+########################################################################
+resource "azurerm_network_interface_backend_address_pool_association" "lb_backend_association" {
+  for_each = merge([
+    for lb_key in keys(var.loadbalancer) : {
+      for vm_key, vm in var.vms_linux_web :
+      "${lb_key}-${vm_key}" => {
+        lb_key = lb_key
+        vm_key = vm_key
+        vm     = vm
+      }
+    }
+  ]...)
+
+  network_interface_id    = module.vms_web[each.value.vm_key].nic_id
+  ip_configuration_name   = "ipconfig-${each.value.vm.name}"
+  backend_address_pool_id = module.loadbalancer[each.value.lb_key].backend_pool_id
+}

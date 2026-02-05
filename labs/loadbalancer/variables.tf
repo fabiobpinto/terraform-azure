@@ -100,3 +100,11 @@ variable "vms_linux_web" {
   }))
   description = "Configuration object for the Linux virtual machine."
 }
+
+variable "loadbalancer" {
+  type = map(object({
+    sku                              = string
+    frontend_ip_configuration_name   = string
+  }))
+  description = "Configuration object for the load balancer."
+}
