@@ -1,7 +1,7 @@
 resource "azurerm_public_ip" "pip" {
   count = var.enable_public_ip ? 1 : 0
 
-  name                = "${var.vm_linux.vm_name}-pip"
+  name                = "pip-${var.vm_linux.vm_name}"
   resource_group_name = var.rg_name
   location            = var.location
   allocation_method   = "Static"
@@ -73,11 +73,9 @@ resource "azurerm_linux_virtual_machine" "vm_linux" {
 resource "azurerm_dev_test_global_vm_shutdown_schedule" "shutdown" {
   count = var.auto_shutdown.enabled ? 1 : 0
 
-  virtual_machine_id = azurerm_linux_virtual_machine.vm_linux.id
-  location           = var.location
-
-  enabled = true
-
+  virtual_machine_id    = azurerm_linux_virtual_machine.vm_linux.id
+  location              = var.location
+  enabled               = true
   daily_recurrence_time = var.auto_shutdown.time
   timezone              = var.auto_shutdown.timezone
 

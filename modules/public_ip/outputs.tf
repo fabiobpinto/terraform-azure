@@ -4,5 +4,6 @@ output "public_ip_address" {
 }
 
 output "public_ip_id" {
-  value = azurerm_public_ip.pip.id
+  value       = azurerm_public_ip.pip.id
+  description = "The ID of the public IP address."
 }

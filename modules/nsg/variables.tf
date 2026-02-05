@@ -24,7 +24,6 @@ variable "nsg_subnet_id" {
 }
 
 variable "nsg_rules" {
-  description = "NSG rules by subnet type"
   type = list(object({
     name      = string
     priority  = number
@@ -39,4 +38,5 @@ variable "nsg_rules" {
     source_address_prefix      = optional(string, "*")
     destination_address_prefix = optional(string, "*")
   }))
+  description = "NSG rules by subnet type"
 }

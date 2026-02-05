@@ -53,8 +53,8 @@ variable "nic_info" {
 }
 
 variable "enable_public_ip" {
-  type    = bool
-  default = false
+  type        = bool
+  default     = false
   description = "Enable Public IP"
 }
 
