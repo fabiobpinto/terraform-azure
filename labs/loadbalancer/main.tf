@@ -12,7 +12,7 @@ module "rg" {
 ### Virtual Network
 ########################################################################
 module "network" {
-  source             = "../../modules/virtual_network"
+  source   = "../../modules/virtual_network"
   rg_name  = module.rg.rg_name
   location = module.rg.location
   tags     = var.tags
@@ -26,16 +26,16 @@ module "network" {
 ### Network Security Group
 ########################################################################
 module "nsg" {
-  source = "../../modules/nsg"
+  source   = "../../modules/nsg"
   rg_name  = module.rg.rg_name
   location = module.rg.location
   tags     = var.tags
 
   for_each = var.subnets
 
-  nsg_name = "nsg-${each.value.name}"
+  nsg_name      = "nsg-${each.value.name}"
   nsg_subnet_id = module.network.subnet_ids[each.key]
-  nsg_rules = var.nsg_rules[each.value.rule]
+  nsg_rules     = var.nsg_rules[each.value.rule]
 }
 
 ########################################################################
@@ -148,7 +148,7 @@ module "vms_ansible" {
 ### LoadBalancer Public IP
 ########################################################################
 module "public_ip_loadbalancer" {
-  source = "../../modules/public_ip"
+  source   = "../../modules/public_ip"
   rg_name  = module.rg.rg_name
   location = module.rg.location
   tags     = var.tags

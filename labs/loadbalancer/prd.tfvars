@@ -69,12 +69,6 @@ nsg_rules = {
       destination_port_range = "443"
     },
     {
-      name                   = "Allow-SSH"
-      priority               = 1030
-      direction              = "Inbound"
-      destination_port_range = "22"
-    },
-    {
       name                       = "Allow-All-Internet-Outbound"
       priority                   = 1000
       direction                  = "Outbound"

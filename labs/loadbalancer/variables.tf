@@ -63,7 +63,7 @@ variable "admin_username" {
 
 variable "admin_pass" {
   type        = string
-  sensitive = true
+  sensitive   = true
   description = "The admin password for the Linux virtual machine."
 }
 
