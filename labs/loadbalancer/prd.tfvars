@@ -260,9 +260,6 @@ loadbalancer_public = {
         target_vm     = "linuxweb02"
       }
     }
-
-
-
   }
 }
 
