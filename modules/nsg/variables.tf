@@ -35,8 +35,18 @@ variable "nsg_rules" {
     source_port_range      = optional(string, "*")
     destination_port_range = string
 
-    source_address_prefix      = optional(string, "*")
-    destination_address_prefix = optional(string, "*")
+    source_address_prefix                       = optional(string, "*")
+    destination_address_prefix                  = optional(string, "*")
+    source_application_security_group_ids       = optional(list(string), [])
+    destination_application_security_group_ids  = optional(list(string), [])
+    source_application_security_group_keys      = optional(list(string), [])
+    destination_application_security_group_keys = optional(list(string), [])
   }))
   description = "NSG rules by subnet type"
+}
+
+variable "application_security_group_ids" {
+  type        = map(string)
+  description = "Map of Application Security Group IDs by logical key."
+  default     = {}
 }
