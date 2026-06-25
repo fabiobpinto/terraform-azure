@@ -25,7 +25,7 @@ variable "vm_linux" {
     os_disk = object({
       caching              = string
       storage_account_type = string
-      disk_size_gb         = optional(number, 30)
+      disk_size_gb         = optional(number, 50)
     })
 
     source_image_reference = object({
@@ -62,6 +62,12 @@ variable "public_ip_id" {
   type        = string
   default     = null
   description = "The ID of the Public IP to associate with the VM's NIC."
+}
+
+variable "application_security_group_ids" {
+  type        = list(string)
+  default     = []
+  description = "Application Security Group IDs to associate with the VM's NIC."
 }
 
 variable "auto_shutdown" {

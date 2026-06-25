@@ -26,6 +26,13 @@ resource "azurerm_network_interface" "nic_linux" {
   }
 }
 
+resource "azurerm_network_interface_application_security_group_association" "asg" {
+  for_each = toset(var.application_security_group_ids)
+
+  network_interface_id          = azurerm_network_interface.nic_linux.id
+  application_security_group_id = each.value
+}
+
 resource "azurerm_linux_virtual_machine" "vm_linux" {
   name                            = var.vm_linux.vm_name
   computer_name                   = var.vm_linux.computer_name
