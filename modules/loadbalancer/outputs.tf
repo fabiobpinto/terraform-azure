@@ -20,3 +20,11 @@ output "lb_id" {
   description = "ID of the Load Balancer"
   value       = azurerm_lb.lb.id
 }
+
+output "backend_pool_id" {
+  value = azurerm_lb_backend_address_pool.be_address_pool.id
+}
+
+output "backend_pool_name" {
+  value = azurerm_lb_backend_address_pool.be_address_pool.name
+}

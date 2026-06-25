@@ -66,6 +66,7 @@ variable "nic_be_pool_associations" {
     network_interface_id  = string
     ip_configuration_name = string
   }))
+  default     = {}
   description = "Network Interface to Backend Address Pool associations."
 }
 
