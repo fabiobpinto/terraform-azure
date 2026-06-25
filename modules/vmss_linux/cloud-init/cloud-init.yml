@@ -1,0 +1,60 @@
+#cloud-config
+package_update: true
+
+timezone: America/Sao_Paulo
+
+packages:
+    - python3
+    - unzip
+    - tar
+    - nginx
+
+users:
+    - default
+    - name: useransible
+      gecos: User Ansible
+      shell: /bin/bash
+      sudo: ALL=(ALL) NOPASSWD:ALL
+      ssh_authorized_keys:
+          - ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIGiftpR8WLYW8UQ2EMeCLS4sc0Zwucwoh0KE2lWm0rTr useransible
+
+# ssh_pwauth: false --- IGNORE --- Disable password authentication
+disable_root: true
+
+runcmd:
+    - systemctl enable nginx
+    - systemctl start nginx
+    - |
+        HOSTNAME=$(hostname)
+        IP=$(hostname -I | awk '{print $1}')
+
+        cat > /var/www/html/index.html << EOF
+        <!DOCTYPE html>
+        <html>
+        <head>
+            <title>Azure VMSS</title>
+            <style>
+                body {
+                    font-family: Arial, sans-serif;
+                    text-align: center;
+                    margin-top: 50px;
+                }
+                .container {
+                    border: 1px solid #ddd;
+                    padding: 20px;
+                    width: 500px;
+                    margin: auto;
+                    border-radius: 10px;
+                }
+            </style>
+        </head>
+        <body>
+            <div class="container">
+                <h1>Azure VM Scale Set</h1>
+                <p><strong>Hostname:</strong> ${HOSTNAME}</p>
+                <p><strong>IP:</strong> ${IP}</p>
+                <p><strong>Provisioned At:</strong> $(date)</p>
+            </div>
+        </body>
+        </html>
+        EOF
