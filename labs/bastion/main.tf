@@ -97,14 +97,8 @@ module "vms_app" {
     }
   }
 
-  auto_shutdown = {
-    enabled        = true
-    time           = "1800"
-    timezone       = "E. South America Standard Time"
-    notify         = false
-    notify_minutes = 30
-    email          = null
-  }
+  enable_auto_shutdown = each.value.enable_auto_shutdown
+  auto_shutdown        = each.value.enable_auto_shutdown ? each.value.auto_shutdown : null
 }
 
 
@@ -149,15 +143,8 @@ module "vms_web" {
     }
   }
 
-
-  auto_shutdown = {
-    enabled        = true
-    time           = "1800"
-    timezone       = "E. South America Standard Time"
-    notify         = false
-    notify_minutes = 30
-    email          = null
-  }
+  enable_auto_shutdown = each.value.enable_auto_shutdown
+  auto_shutdown        = each.value.enable_auto_shutdown ? each.value.auto_shutdown : null
 }
 
 

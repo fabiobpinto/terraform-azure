@@ -27,3 +27,8 @@ output "public_ip_id" {
   value       = var.enable_public_ip ? azurerm_public_ip.pip[0].id : null
   description = "ID of the Public IP of the VM (if exists)"
 }
+
+output "vm_id" {
+  description = "ID of the Linux Virtual Machine"
+  value       = azurerm_linux_virtual_machine.vm_linux.id
+}

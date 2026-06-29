@@ -75,8 +75,9 @@ variable "vms_linux_ansible" {
     size                            = string
     disable_password_authentication = bool
 
-    enable_public_ip = optional(bool)
-    pip_name         = optional(string)
+    enable_public_ip     = optional(bool)
+    enable_auto_shutdown = optional(bool)
+    pip_name             = optional(string)
 
     os_disk = object({
       caching              = string
@@ -98,6 +99,15 @@ variable "vms_linux_ansible" {
       private_ip_address            = string
       private_ip_address_allocation = string
     })
+
+    auto_shutdown = optional(object({
+      time           = string
+      timezone       = string
+      notify         = bool
+      notify_minutes = number
+      email          = string
+    }))
+
   }))
   description = "Configuration object for the Linux virtual machine."
 }
@@ -110,8 +120,9 @@ variable "vms_linux_web" {
     size                            = string
     disable_password_authentication = bool
 
-    enable_public_ip = optional(bool)
-    pip_name         = optional(string)
+    enable_public_ip     = optional(bool)
+    enable_auto_shutdown = optional(bool)
+    pip_name             = optional(string)
 
     os_disk = object({
       caching              = string
@@ -133,6 +144,15 @@ variable "vms_linux_web" {
       private_ip_address            = string
       private_ip_address_allocation = string
     })
+
+    auto_shutdown = optional(object({
+      time           = string
+      timezone       = string
+      notify         = bool
+      notify_minutes = number
+      email          = string
+    }))
+
   }))
   description = "Configuration object for the Linux virtual machine."
 }

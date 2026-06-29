@@ -79,7 +79,7 @@ resource "azurerm_linux_virtual_machine" "vm_linux" {
 }
 
 resource "azurerm_dev_test_global_vm_shutdown_schedule" "shutdown" {
-  count = var.auto_shutdown.enabled ? 1 : 0
+  count = var.enable_auto_shutdown ? 1 : 0
 
   virtual_machine_id    = azurerm_linux_virtual_machine.vm_linux.id
   location              = var.location

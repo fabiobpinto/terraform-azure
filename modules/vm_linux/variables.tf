@@ -70,14 +70,21 @@ variable "application_security_group_ids" {
   description = "Application Security Group IDs to associate with the VM's NIC."
 }
 
+variable "enable_auto_shutdown" {
+  type        = bool
+  default     = false
+  description = "Enable auto shutdown."
+}
+
 variable "auto_shutdown" {
   type = object({
-    enabled        = bool
+    # enabled        = bool
     time           = string
     timezone       = string
     notify         = bool
     notify_minutes = number
     email          = string
   })
+  default     = null
   description = "Configuration object for the VM auto-shutdown feature."
 }

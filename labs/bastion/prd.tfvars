@@ -133,6 +133,7 @@ vms_linux_app = {
     computer_name                   = "linuxapp01"
     size                            = "Standard_DS1_v2"
     enable_public_ip                = false
+    enable_auto_shutdown            = false
 
     source_image_reference = {
       publisher = "RedHat"
@@ -165,6 +166,7 @@ vms_linux_web = {
     computer_name                   = "linuxweb01"
     size                            = "Standard_DS1_v2"
     enable_public_ip                = false
+    enable_auto_shutdown            = true
 
     source_image_reference = {
       publisher = "Canonical"
@@ -185,6 +187,14 @@ vms_linux_web = {
     nic_info = {
       private_ip_address            = "10.0.1.10"
       private_ip_address_allocation = "Static"
+    }
+
+    auto_shutdown = {
+      time           = "1900"
+      timezone       = "E. South America Standard Time"
+      notify         = false
+      notify_minutes = 30
+      email          = null
     }
   }
 }

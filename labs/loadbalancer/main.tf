@@ -49,6 +49,8 @@ module "vms_web" {
 
   for_each = var.vms_linux_web
 
+  enable_public_ip = try(each.value.enable_public_ip, false)
+
   vm_linux = {
     admin_username                  = each.value.admin_username
     admin_pass                      = var.admin_pass
@@ -80,14 +82,8 @@ module "vms_web" {
     }
   }
 
-  auto_shutdown = {
-    enabled        = true
-    time           = "1900"
-    timezone       = "E. South America Standard Time"
-    notify         = false
-    notify_minutes = 30
-    email          = null
-  }
+  enable_auto_shutdown = each.value.enable_auto_shutdown
+  auto_shutdown        = each.value.enable_auto_shutdown ? each.value.auto_shutdown : null
 }
 
 ########################################################################
@@ -134,14 +130,8 @@ module "vms_ansible" {
     }
   }
 
-  auto_shutdown = {
-    enabled        = true
-    time           = "1900"
-    timezone       = "E. South America Standard Time"
-    notify         = false
-    notify_minutes = 30
-    email          = null
-  }
+  enable_auto_shutdown = each.value.enable_auto_shutdown
+  auto_shutdown        = each.value.enable_auto_shutdown ? each.value.auto_shutdown : null
 }
 
 ########################################################################

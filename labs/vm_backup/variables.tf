@@ -67,52 +67,6 @@ variable "admin_pass" {
   description = "The admin password for the Linux virtual machine."
 }
 
-variable "vms_linux_app" {
-  type = map(object({
-    admin_username                  = string
-    name                            = string
-    computer_name                   = string
-    size                            = string
-    disable_password_authentication = bool
-
-    enable_public_ip     = optional(bool)
-    enable_auto_shutdown = optional(bool)
-    pip_name             = optional(string)
-
-    os_disk = object({
-      caching              = string
-      storage_account_type = string
-      disk_size_gb         = number
-    })
-
-    source_image_reference = object({
-      offer     = string
-      publisher = string
-      sku       = string
-      version   = string
-    })
-
-    nic_ip_configuration_name = string
-    subnet_name               = string
-
-    nic_info = object({
-      private_ip_address            = string
-      private_ip_address_allocation = string
-    })
-
-    auto_shutdown = optional(object({
-      time           = string
-      timezone       = string
-      notify         = bool
-      notify_minutes = number
-      email          = string
-    }))
-
-  }))
-  description = "Configuration object for the Linux virtual machine."
-}
-
-
 variable "vms_linux_web" {
   type = map(object({
     admin_username                  = string
@@ -158,20 +112,53 @@ variable "vms_linux_web" {
   description = "Configuration object for the Linux virtual machine."
 }
 
-# Bastion Host Configuration - Depending of type of SKU, some features may not be available
-variable "bastion" {
+variable "backup_policies" {
+  description = "Recovery Services Vaults and VM backup configuration."
   type = map(object({
-    copy_paste_enabled        = optional(bool, true)
-    file_copy_enabled         = optional(bool, false)
-    ip_connect_enabled        = optional(bool, false)
-    kerberos_enabled          = optional(bool, false)
-    scale_units               = optional(number, 2)
-    session_recording_enabled = optional(bool, false)
-    shareable_link_enabled    = optional(bool, false)
-    sku                       = optional(string, "Standard")
-    tunneling_enabled         = optional(bool, false)
-    virtual_network_id        = optional(string, null)
-    zones                     = optional(list(string), [])
+
+    recovery_vault = object({
+      name                = string
+      sku                 = optional(string, "Standard")
+      soft_delete_enabled = bool
+      storage_mode_type   = optional(string, "GeoRedundant")
+      # instant_restore_retention_days = optional(number, 5)
+    })
+
+    backup_policy = object({
+      name     = string
+      timezone = string
+
+      backup = object({
+        frequency     = string
+        time          = string
+        weekdays      = optional(list(string))
+        hour_interval = optional(number)
+        hour_duration = optional(number)
+      })
+
+      retention_daily = object({
+        count = number
+      })
+
+      retention_weekly = object({
+        count    = number
+        weekdays = list(string)
+      })
+
+      retention_monthly = object({
+        count    = number
+        weekdays = list(string)
+        weeks    = list(string)
+      })
+
+      retention_yearly = object({
+        count    = number
+        weekdays = list(string)
+        weeks    = list(string)
+        months   = list(string)
+      })
+    })
+
+    # source_vm_id = list(string)
   }))
-  description = "Configuration object for the bastion host."
 }
