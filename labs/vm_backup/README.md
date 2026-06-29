@@ -27,7 +27,7 @@ A arquitetura é composta pelos seguintes componentes:
 
 📐 **Diagrama da arquitetura:**
 
-![Azure VM Backup](https://github.com/fabiobpinto/terraform-azure/blob/main/docs/vm_backup.png)
+![Azure VM Backup](https://github.com/fabiobpinto/terraform-azure/blob/main/docs/vm_rsv.png)
 
 ---
 
