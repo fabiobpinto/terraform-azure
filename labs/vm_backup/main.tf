@@ -100,7 +100,7 @@ module "backup_daily" {
 
   source_vm_id = {
     linuxweb01 = module.vms_web["linuxweb01"].vm_id,
-    linuxweb03 = module.vms_web["linuxweb03"].vm_id
+    linuxweb03 = module.vms_web["linuxweb02"].vm_id
   }
   tags = var.tags
 }
@@ -115,7 +115,7 @@ module "backup_weekly" {
   backup_policy  = var.backup_policies["weekly"].backup_policy
 
   source_vm_id = {
-    linuxweb02 = module.vms_web["linuxweb02"].vm_id
+    linuxweb02 = module.vms_web["linuxweb03"].vm_id
   }
   tags = var.tags
 }
