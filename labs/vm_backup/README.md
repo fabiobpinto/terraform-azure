@@ -1,59 +1,44 @@
-# Terraform Azure Loadbalancer Lab
+# Terraform Azure VM Backup Lab
 
-Este laboratório tem como objetivo demonstrar, na prática, a criação e configuração de um **Azure Standard Load Balancer** utilizando **Terraform**, seguindo boas práticas de Infraestrutura como Código (IaC).
+Este laboratório demonstra o uso do Terraform no Microsoft Azure para provisionar uma solução de **backup de Máquinas Virtuais (VMs)** utilizando o **Azure Recovery Services Vault**.
 
+O objetivo é aplicar conceitos de proteção de workloads, políticas de backup e recuperação de desastres, seguindo boas práticas de Infrastructure as Code (IaC).
 
 ---
 
 ## 🧱 Arquitetura do Lab
 
-A arquitetura do laboratório é composta por um Load Balancer Standard público, distribuindo tráfego para múltiplas máquinas virtuais Linux em uma Virtual Network, com regras de balanceamento e Inbound NAT configuradas.
+A arquitetura é composta pelos seguintes componentes:
 
-- Servidores Linux (Web VM)
-- Public IP
-- Load Balancer (Backend Pool, Inbound Nat Rules, Health Probe e Load Balancing rules)
-- Subnets
-- NSG
+- Resource Group
+- Recovery Services Vault
+- Backup Policy
+- Azure Virtual Machines
+- Associação das VMs à política de backup
+- Recovery Points gerenciados pelo Azure Backup
 
-📐 Diagrama da arquitetura:
+### Fluxo do Backup
 
-![Azure Loadbalancer Architecture](https://github.com/fabiobpinto/terraform-azure/blob/main/docs/loadbalancer-architecture.png)
+- O Recovery Services Vault armazena os backups das máquinas virtuais.
+- Uma Backup Policy define frequência, horário e retenção dos backups.
+- As máquinas virtuais são registradas no Vault.
+- O Azure Backup executa automaticamente os backups conforme a política configurada.
+- Os Recovery Points ficam disponíveis para restauração quando necessário.
 
+📐 **Diagrama da arquitetura:**
 
-### Load Balancer Resources
-
-[azurerm_lb](https://registry.terraform.io/providers/hashicorp/Azurerm/3.77.0/docs/resources/lb)
-
-[azurerm_lb_backend_address_pool](https://registry.terraform.io/providers/hashicorp/Azurerm/3.77.0/docs/resources/lb_backend_address_pool)
-
-[azurerm_lb_backend_address_pool_address](https://registry.terraform.io/providers/hashicorp/Azurerm/3.77.0/docs/resources/lb_backend_address_pool_address)
-
-[azurerm_network_interface_backend_address_pool_association](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/network_interface_backend_address_pool_association)
-
-[azurerm_lb_probe](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/lb_probe)
-
-[azurerm_lb_rule](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/lb_rule)
-
-[azurerm_lb_outbound_rule](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/lb_outbound_rule)
-
-[azurerm_lb_nat_pool](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/lb_nat_pool)
-
-[azurerm_lb_nat_rule](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/lb_rule)
-
+![Azure VM Backup](https://github.com/fabiobpinto/terraform-azure/blob/main/docs/vm_backup.png)
 
 ---
 
 ## 🎯 Objetivos do Laboratório
 
-- Criar um **Azure Standard Load Balancer** utilizando Terraform
-- Provisionar **Public IP** para exposição do Load Balancer
-- Implementar **Backend Address Pool** com múltiplas VMs Linux
-- Configurar **Health Probes (TCP)** para monitoramento dos backends
-- Criar **Load Balancer Rules** para distribuição de tráfego
-- Implementar **Inbound NAT Rules** para acesso administrativo às VMs
-- Associar NICs das VMs ao Backend Pool
-- Organizar o código utilizando **modules reutilizáveis** e **labs independentes**
-
+- Provisionar um Azure Recovery Services Vault
+- Criar uma Backup Policy personalizada
+- Proteger uma ou mais Azure Virtual Machines
+- Demonstrar a associação entre VMs e políticas de backup
+- Organizar a infraestrutura utilizando módulos reutilizáveis
+- Automatizar toda a configuração utilizando Terraform
 
 ---
 
@@ -62,41 +47,81 @@ A arquitetura do laboratório é composta por um Load Balancer Standard público
 ```text
 .
 ├── labs
-│   └── loadbalancer
+│   └── vm_backup
 │       ├── main.tf
 │       ├── provider.tf
 │       ├── variables.tf
 │       ├── prd.tfvars
 │       └── output.tf
 └── modules
-    ├── bastion
-    ├── loadbalancer
     ├── resource_group
-    ├── virtual_network
-    ├── nsg
-    ├── public_ip
-    ├── vm_linux
-    └── model
-
+    ├── backup_vault
+    └── virtual_machine
 ```
+
+---
+
+## ⚙️ Componentes da Solução
+
+### Recovery Services Vault
+
+Responsável por armazenar e gerenciar os backups das máquinas virtuais.
+
+#### Características
+
+- Armazenamento centralizado dos backups
+- Gerenciamento dos Recovery Points
+- Integração nativa com Azure Backup
+- Configuração automatizada via Terraform
+
+---
+
+### Backup Policy
+
+Define como os backups serão executados.
+
+#### Recursos utilizados
+
+- Frequência (Daily ou Weekly)
+- Horário de execução
+- Configuração de retenção diária
+- Associação automática às máquinas protegidas
+
+---
+
+### Protected Virtual Machine
+
+Representa a associação entre uma máquina virtual e uma política de backup.
+
+#### Benefícios
+
+- Proteção automatizada
+- Criação periódica de Recovery Points
+- Recuperação simplificada
+- Gerenciamento centralizado pelo Recovery Services Vault
+
 ---
 
 ## 🔐 Segurança e Boas Práticas
 
-- Utilização do **Azure Standard Load Balancer**, que exige configuração explícita de regras
-- Separação de responsabilidades utilizando **módulos Terraform**
-- Uso de **Health Probes** para garantir tráfego apenas para backends saudáveis
-- Associação explícita das NICs ao Backend Pool
-- Uso de **Inbound NAT Rules** apenas para fins de administração
-- Infraestrutura totalmente declarativa e idempotente
+- Backup centralizado utilizando Recovery Services Vault
+- Políticas reutilizáveis para múltiplas VMs
+- Infraestrutura totalmente definida como código
+- Código organizado em módulos reutilizáveis
+- Configurações parametrizadas através de variáveis
+- Arquivos sensíveis ignorados via `.gitignore`
 
 ---
 
 ## 🚀 Como Executar o Lab
+
 ```bash
-cd labs/loadbalancer
+cd labs/vm_backup
+
 terraform init
+
 terraform plan -var-file="prd.tfvars"
+
 terraform apply -var-file="prd.tfvars"
 ```
 
@@ -104,22 +129,44 @@ terraform apply -var-file="prd.tfvars"
 
 ## 🔎 Validações
 
-- Validar a criação do **Azure Standard Load Balancer** no Portal
-- Verificar se as VMs estão associadas corretamente ao **Backend Pool**
-- Validar o status dos **Health Probes**
-- Testar o acesso às aplicações via IP público do Load Balancer
-- Verificar o acesso individual às VMs através das **Inbound NAT Rules**
+Após o provisionamento:
+
+### Recovery Services Vault
+
+- Confirmar a criação do Recovery Services Vault no Azure Portal
+- Verificar a região configurada
+
+### Backup Policy
+
+- Confirmar a criação da política de backup
+- Validar frequência e horário configurados
+- Verificar as configurações de retenção
+
+### Protected Virtual Machines
+
+- Confirmar que as máquinas virtuais estão protegidas
+- Validar a associação com a Backup Policy
+
+### Backup
+
+- Executar um backup sob demanda (opcional)
+- Confirmar a criação dos Recovery Points
+- Validar o status da proteção das VMs
 
 ---
 
 ## 🧹 Remoção dos Recursos
+
 ```bash
 terraform destroy -var-file="prd.tfvars"
 ```
+
+> **Observação:** O comportamento da remoção dos backups depende das configurações definidas no bloco `features.recovery_service` do provider `azurerm`, podendo manter ou excluir os itens protegidos durante o `terraform destroy`.
 
 ---
 
 ## 👤 Autor
 
-Fábio Brito Pinto
+**Fábio Brito Pinto**
+
 Cloud Engineer | Terraform | Azure
