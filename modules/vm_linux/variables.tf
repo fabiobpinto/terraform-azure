@@ -72,7 +72,6 @@ variable "application_security_group_ids" {
 
 variable "auto_shutdown" {
   type = object({
-    # enabled        = bool
     time           = string
     timezone       = string
     notify         = bool
