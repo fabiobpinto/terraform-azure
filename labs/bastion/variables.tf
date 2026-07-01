@@ -75,9 +75,8 @@ variable "vms_linux_app" {
     size                            = string
     disable_password_authentication = bool
 
-    enable_public_ip     = optional(bool)
-    enable_auto_shutdown = optional(bool)
-    pip_name             = optional(string)
+    enable_public_ip = optional(bool)
+    pip_name         = optional(string)
 
     os_disk = object({
       caching              = string
@@ -121,9 +120,8 @@ variable "vms_linux_web" {
     size                            = string
     disable_password_authentication = bool
 
-    enable_public_ip     = optional(bool)
-    enable_auto_shutdown = optional(bool)
-    pip_name             = optional(string)
+    enable_public_ip = optional(bool)
+    pip_name         = optional(string)
 
     os_disk = object({
       caching              = string

@@ -75,7 +75,6 @@ vms_linux_web = {
     computer_name                   = "linuxweb01"
     size                            = "Standard_DS1_v2"
     enable_public_ip                = true
-    enable_auto_shutdown            = true
 
     source_image_reference = {
       publisher = "RedHat"
@@ -114,7 +113,6 @@ vms_linux_web = {
     computer_name                   = "linuxweb02"
     size                            = "Standard_DS1_v2"
     enable_public_ip                = false
-    enable_auto_shutdown            = false
 
     source_image_reference = {
       publisher = "RedHat"
@@ -144,7 +142,6 @@ vms_linux_web = {
     computer_name                   = "linuxweb03"
     size                            = "Standard_DS1_v2"
     enable_public_ip                = false
-    enable_auto_shutdown            = false
 
     source_image_reference = {
       publisher = "RedHat"

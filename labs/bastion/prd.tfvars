@@ -133,7 +133,6 @@ vms_linux_app = {
     computer_name                   = "linuxapp01"
     size                            = "Standard_DS1_v2"
     enable_public_ip                = false
-    enable_auto_shutdown            = false
 
     source_image_reference = {
       publisher = "RedHat"
@@ -166,7 +165,6 @@ vms_linux_web = {
     computer_name                   = "linuxweb01"
     size                            = "Standard_DS1_v2"
     enable_public_ip                = false
-    enable_auto_shutdown            = true
 
     source_image_reference = {
       publisher = "Canonical"

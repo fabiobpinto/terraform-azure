@@ -81,8 +81,7 @@ module "vms_web" {
       private_ip_address            = each.value.nic_info.private_ip_address
     }
   }
-  enable_auto_shutdown = each.value.enable_auto_shutdown
-  auto_shutdown        = each.value.enable_auto_shutdown ? each.value.auto_shutdown : null
+  auto_shutdown = try(each.value.auto_shutdown, null)
 }
 
 

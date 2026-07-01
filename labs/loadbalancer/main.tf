@@ -82,8 +82,7 @@ module "vms_web" {
     }
   }
 
-  enable_auto_shutdown = each.value.enable_auto_shutdown
-  auto_shutdown        = each.value.enable_auto_shutdown ? each.value.auto_shutdown : null
+  auto_shutdown = try(each.value.auto_shutdown, null)
 }
 
 ########################################################################
@@ -130,8 +129,7 @@ module "vms_ansible" {
     }
   }
 
-  enable_auto_shutdown = each.value.enable_auto_shutdown
-  auto_shutdown        = each.value.enable_auto_shutdown ? each.value.auto_shutdown : null
+  auto_shutdown = try(each.value.auto_shutdown, null)
 }
 
 ########################################################################
