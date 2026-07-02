@@ -45,6 +45,12 @@ nsg_rules = {
       destination_port_range = "80"
     },
     {
+      name                   = "Allow-RDP"
+      priority               = 1011
+      direction              = "Inbound"
+      destination_port_range = "3389"
+    },
+    {
       name                   = "Allow-HTTPS"
       priority               = 1020
       direction              = "Inbound"
@@ -63,7 +69,7 @@ nsg_rules = {
 }
 
 ########################################################################
-# Virtual Machines
+### Virtual Machines Linux
 ########################################################################
 admin_username = "adminfabio"
 
@@ -165,6 +171,54 @@ vms_linux_web = {
     }
   }
 }
+
+########################################################################
+### Virtual Machines Windows
+########################################################################
+
+vms_windows = {
+  windowsvm01 = {
+    admin_username                  = "adminfabio"
+    disable_password_authentication = false
+    name                            = "windowsvm01"
+    computer_name                   = "windowsvm01"
+    size                            = "Standard_DS1_v2"
+    enable_public_ip                = true
+
+    source_image_reference = {
+      publisher = "MicrosoftWindowsServer"
+      offer     = "WindowsServer"
+      sku       = "2019-Datacenter"
+      version   = "latest"
+    }
+
+    os_disk = {
+      caching              = "ReadWrite"
+      storage_account_type = "Premium_LRS"
+      disk_size_gb         = 200
+    }
+
+    nic_ip_configuration_name = "primary"
+    subnet_name               = "snet-prd-web"
+
+    nic_info = {
+      private_ip_address            = "10.0.1.11"
+      private_ip_address_allocation = "Static"
+    }
+
+    auto_shutdown = {
+      time           = "1900"
+      timezone       = "E. South America Standard Time"
+      notify         = false
+      notify_minutes = 30
+      email          = null
+    }
+
+  }
+}
+
+
+
 
 
 backup_policies = {

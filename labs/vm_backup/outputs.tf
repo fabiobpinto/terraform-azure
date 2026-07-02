@@ -14,3 +14,21 @@ output "vms_web_public_ips" {
     if v.public_ip_address != null
   }
 }
+
+
+output "vms_windows_private_ips" {
+  description = "IPs privados das VMs Windows"
+  value = {
+    for vm_key, vm in module.vms_windows :
+    vm_key => vm.nic_private_ip
+  }
+}
+
+output "vms_windows_public_ips" {
+  description = "IPs públicos das VMs Windows"
+  value = {
+    for k, v in module.vms_windows :
+    k => v.public_ip_address
+    if v.public_ip_address != null
+  }
+}

@@ -111,6 +111,52 @@ variable "vms_linux_web" {
   description = "Configuration object for the Linux virtual machine."
 }
 
+variable "vms_windows" {
+  type = map(object({
+    admin_username                  = string
+    name                            = string
+    computer_name                   = string
+    size                            = string
+    disable_password_authentication = bool
+
+    enable_public_ip = optional(bool)
+    pip_name         = optional(string)
+
+    os_disk = object({
+      caching              = string
+      storage_account_type = string
+      disk_size_gb         = number
+    })
+
+    source_image_reference = object({
+      offer     = string
+      publisher = string
+      sku       = string
+      version   = string
+    })
+
+    nic_ip_configuration_name = string
+    subnet_name               = string
+
+    nic_info = object({
+      private_ip_address            = string
+      private_ip_address_allocation = string
+    })
+
+    auto_shutdown = optional(object({
+      time           = string
+      timezone       = string
+      notify         = bool
+      notify_minutes = number
+      email          = string
+    }))
+
+  }))
+  description = "Configuration object for the Windows virtual machine."
+}
+
+
+
 variable "backup_policies" {
   description = "Recovery Services Vaults and VM backup configuration."
   type = map(object({
