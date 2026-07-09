@@ -59,6 +59,10 @@ resource "azurerm_windows_virtual_machine" "vm_windows" {
     version   = var.vm_windows.source_image_reference.version
   }
 
+  identity {
+    type = "SystemAssigned"
+  }
+
   lifecycle {
     ignore_changes = [
       admin_password,

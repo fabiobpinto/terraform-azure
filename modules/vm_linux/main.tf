@@ -67,6 +67,10 @@ resource "azurerm_linux_virtual_machine" "vm_linux" {
     version   = var.vm_linux.source_image_reference.version
   }
 
+  identity {
+    type = "SystemAssigned"
+  }
+
   lifecycle {
     ignore_changes = [
       admin_password,
