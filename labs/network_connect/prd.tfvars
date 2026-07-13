@@ -20,13 +20,18 @@ subnets = {
     name             = "snet-app"
     address_prefixes = ["10.0.10.0/24"]
     rule             = "app"
-  },
+    delegation = {
+      name = "delegation"
+      service_delegation = {
+        name = "Microsoft.Web/serverFarms"
+      }
+    }
+  }
   web = {
     name             = "snet-web"
     address_prefixes = ["10.0.20.0/24"]
     rule             = "web"
   }
-
 }
 
 ########################################################################

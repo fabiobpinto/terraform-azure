@@ -26,10 +26,18 @@ variable "vnet_address_space" {
 }
 
 variable "subnets" {
+  description = "Subnets configuration"
   type = map(object({
     name             = string
     address_prefixes = list(string)
     rule             = string
+    delegation = optional(object({
+      name = string
+      service_delegation = object({
+        name    = string
+        actions = optional(list(string))
+      })
+    }))
   }))
 }
 

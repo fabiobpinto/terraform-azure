@@ -27,6 +27,16 @@ variable "subnets" {
   type = map(object({
     name             = string
     address_prefixes = list(string)
+
+    delegation = optional(object({
+      name = string
+
+      service_delegation = object({
+        name    = string
+        actions = optional(list(string))
+      })
+    }))
   }))
+
   description = "The address space of Subnets"
 }
