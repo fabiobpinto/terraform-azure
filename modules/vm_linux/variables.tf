@@ -23,9 +23,9 @@ variable "vm_linux" {
     disable_password_authentication = bool
 
     os_disk = object({
-      caching              = string
+      caching              = optional(string, "ReadWrite")
       storage_account_type = string
-      disk_size_gb         = optional(number, 50)
+      disk_size_gb         = optional(number, 64)
     })
 
     source_image_reference = object({
@@ -74,9 +74,9 @@ variable "auto_shutdown" {
   type = object({
     time           = string
     timezone       = string
-    notify         = bool
-    notify_minutes = number
-    email          = string
+    notify         = optional(bool, false)
+    notify_minutes = optional(number)
+    email          = optional(string)
   })
   default     = null
   description = "Configuration object for the VM auto-shutdown feature."

@@ -1,0 +1,3 @@
+policy_name,vault_name,sku,soft_delete_enabled,storage_mode_type,timezone,frequency,time,backup_weekdays,daily_count,weekly_count,weekly_days,monthly_count,monthly_weeks,monthly_days,yearly_count,yearly_weeks,yearly_days,yearly_months
+daily,rsv-prd-daily,Standard,true,LocallyRedundant,UTC,Daily,11:00,,30,8,Sunday,12,First,Sunday,5,First,Sunday,January
+weekly,rsv-prd-weekly,Standard,true,LocallyRedundant,UTC,Weekly,11:00,Sunday,7,52,Sunday,24,Last,Sunday,10,Last,Sunday,December

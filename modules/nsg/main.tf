@@ -44,7 +44,7 @@ resource "azurerm_network_security_rule" "rules" {
   network_security_group_name = azurerm_network_security_group.nsg.name
 }
 
-resource "azurerm_subnet_network_security_group_association" "assoc" {
-  subnet_id                 = var.nsg_subnet_id
-  network_security_group_id = azurerm_network_security_group.nsg.id
-}
+# resource "azurerm_subnet_network_security_group_association" "assoc" {
+#   subnet_id                 = var.nsg_subnet_id
+#   network_security_group_id = azurerm_network_security_group.nsg.id
+# }

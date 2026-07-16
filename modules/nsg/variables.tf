@@ -18,10 +18,10 @@ variable "nsg_name" {
   type        = string
 }
 
-variable "nsg_subnet_id" {
-  description = "The ID of the subnet where the network security group will be deployed."
-  type        = any
-}
+# variable "nsg_subnet_id" {
+#   description = "The ID of the subnet where the network security group will be deployed."
+#   type        = any
+# }
 
 variable "nsg_rules" {
   type = list(object({

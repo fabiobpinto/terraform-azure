@@ -1,0 +1,4 @@
+name,computer_name,admin_username,size,disable_password_authentication,enable_public_ip,subnet_name,private_ip_address_allocation,private_ip_address,application_security_groups,image_publisher,image_offer,image_sku,image_version,os_disk_storage_account_type,os_disk_size_gb,shutdown_time,shutdown_timezone,shutdown_notify,shutdown_notify_minutes,shutdown_email
+linuxweb01,linuxweb01,adminfabio,Standard_DS1_v2,false,true,snet-prd-web,Static,10.0.1.10,asg-web;asg-monitor,RedHat,RHEL,83-gen2,latest,Premium_LRS,64,,,,,
+linuxweb02,linuxweb02,adminfabio,Standard_DS1_v2,false,false,snet-prd-web,Static,10.0.1.11,,RedHat,RHEL,83-gen2,latest,Premium_LRS,64,,,,,
+linuxapp01,linuxapp01,adminfabio,Standard_B2s,false,false,snet-prd-app,Static,10.0.2.10,asg-app,Canonical,ubuntu-24_04-lts,server,latest,StandardSSD_LRS,128,2200,E. South America Standard Time,false,,

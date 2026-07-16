@@ -1,0 +1,4 @@
+vm_name,policy_name
+linuxweb01,daily
+linuxweb02,weekly
+winserver01,weekly
