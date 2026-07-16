@@ -2,7 +2,7 @@
 ### Network Security Group
 ########################################################################
 module "nsg_csv" {
-  source                         = "../../modules/nsg"
+  source                         = "../../modules/network_security_group"
   rg_name                        = module.rg.rg_name
   location                       = module.rg.location
   tags                           = local.tags
@@ -16,7 +16,7 @@ module "nsg_csv" {
 ### Network Security Group Association
 ########################################################################
 resource "azurerm_subnet_network_security_group_association" "this" {
-  for_each                  = local.csv_virtual_network.subnets
+  for_each                  = local.network.subnets
   subnet_id                 = module.network.subnet_ids[each.key]
   network_security_group_id = module.nsg_csv[each.value.nsg_name].id
 }

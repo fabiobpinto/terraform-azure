@@ -1,0 +1,4 @@
+connection_name,vhub_name,vnet_name
+conn-prd,hub-eastus,vnet-prd
+conn-dev,hub-eastus,vnet-dev
+conn-hml,hub-eastus,vnet-hml

@@ -13,10 +13,6 @@ provider "azurerm" {
       delete_os_disk_on_deletion            = true
       skip_shutdown_and_force_delete        = false
     }
-    recovery_service {
-      vm_backup_stop_protection_and_retain_data_on_destroy = true
-      purge_protected_items_from_vault_on_destroy          = false
-    }
   }
   subscription_id = var.subscription_id
 }

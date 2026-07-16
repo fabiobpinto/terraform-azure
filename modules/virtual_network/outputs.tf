@@ -1,7 +1,23 @@
+########################################################################
+### Virtual Network Outputs
+########################################################################
 output "vnet_id" {
-  value = azurerm_virtual_network.vnet.id
+  description = "The ID of the Virtual Network."
+  value       = azurerm_virtual_network.vnet.id
 }
 
+output "vnet_name" {
+  description = "The name of the Virtual Network."
+  value       = azurerm_virtual_network.vnet.name
+}
+
+########################################################################
+### Subnet Outputs
+########################################################################
 output "subnet_ids" {
-  value = { for k, s in azurerm_subnet.subnets : k => s.id }
+  description = "Map of subnet names and IDs."
+  value = {
+    for subnet_name, subnet in azurerm_subnet.subnets :
+    subnet_name => subnet.id
+  }
 }

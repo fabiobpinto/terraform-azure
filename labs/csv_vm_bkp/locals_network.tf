@@ -12,7 +12,7 @@ locals {
   # Network CSV
   ###############################################################
   network_csv = csvdecode(file("${path.module}/data/01-virtual_network.csv"))
-  csv_virtual_network = {
+  network = {
     vnet_name          = local.network_csv[0].vnet_name
     vnet_address_space = [local.network_csv[0].vnet_address_space]
     subnets = {

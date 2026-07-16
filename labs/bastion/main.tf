@@ -25,7 +25,7 @@ module "network" {
 ### Network Security Group
 ########################################################################
 module "nsg" {
-  source = "../../modules/nsg"
+  source = "../../modules/network_security_group"
 
   for_each = var.subnets
 

@@ -1,0 +1,12 @@
+vnet_name,vnet_address_space,subnet_name,address_prefix,nsg_name,delegation_name,delegation_service
+vnet-prd,10.0.0.0/16,snet-prd-web,10.0.1.0/24,nsg-web,,
+vnet-prd,10.0.0.0/16,snet-prd-app,10.0.2.0/24,nsg-app,,
+vnet-prd,10.0.0.0/16,snet-prd-aci,10.0.3.0/24,nsg-aci,aci-delegation,Microsoft.ContainerInstance/containerGroups
+vnet-prd,10.0.0.0/16,AzureBastionSubnet,10.0.10.0/24,,,
+
+vnet-dev,10.10.0.0/16,snet-dev-web,10.10.1.0/24,nsg-web,,
+vnet-dev,10.10.0.0/16,snet-dev-app,10.10.2.0/24,nsg-app,,
+vnet-dev,10.10.0.0/16,AzureBastionSubnet,10.10.10.0/24,,,
+
+vnet-hml,10.20.0.0/16,snet-hml-web,10.20.1.0/24,nsg-web,,
+vnet-hml,10.20.0.0/16,snet-hml-app,10.20.2.0/24,nsg-app,,

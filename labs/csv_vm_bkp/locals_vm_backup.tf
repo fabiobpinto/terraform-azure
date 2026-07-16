@@ -8,7 +8,7 @@ locals {
   ###############################################################
   # Backup Policies
   ###############################################################
-  csv_backup_policies = {
+  backup_policies = {
     for policy in local.backup_policy_csv :
     policy.policy_name => {
       recovery_vault = {
@@ -66,8 +66,8 @@ locals {
   ###############################################################
   # Backup Assignments
   ###############################################################
-  csv_backup_assignments = {
-    for policy in keys(local.csv_backup_policies) :
+  backup_assignments = {
+    for policy in keys(local.backup_policies) :
     policy => {
       for assignment in local.backup_assignment_csv :
       assignment.vm_name => local.all_vm_ids[assignment.vm_name]

@@ -1,0 +1,4 @@
+vhub_name,address_prefix,wan_name
+hub-eastus,10.1.0.0/24,wan-prd
+hub-brazilsouth,10.2.0.0/24,wan-prd
+hub-dr,10.3.0.0/24,wan-dr

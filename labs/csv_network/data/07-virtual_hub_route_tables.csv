@@ -1,0 +1,4 @@
+vhub_name,route_table_name,labels,route_name,destinations_type,destinations,next_hop_resource_type,next_hop_resource_name,next_hop_type
+hub-eastus,default,default,route-prd,CIDR,10.0.0.0/16,VirtualHubConnection,conn-prd,ResourceId
+hub-eastus,default,default,route-dev,CIDR,10.10.0.0/16,VirtualHubConnection,conn-dev,ResourceId
+hub-eastus,default,default,route-hml,CIDR,10.20.0.0/16,VirtualHubConnection,conn-hml,ResourceId

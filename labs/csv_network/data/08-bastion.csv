@@ -1,0 +1,3 @@
+bastion_name,vnet_name,subnet_name,public_ip_name,sku,scale_units,copy_paste,file_copy,ip_connect,kerberos,shareable_link,tunneling,session_recording
+bastion-prd,vnet-prd,AzureBastionSubnet,pip-bastion-prd,Standard,2,true,true,false,false,true,true,false
+bastion-dev,vnet-dev,AzureBastionSubnet,pip-bastion-dev,Basic,2,true,false,false,false,false,false,false

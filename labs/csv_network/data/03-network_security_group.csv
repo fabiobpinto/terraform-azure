@@ -1,0 +1,8 @@
+nsg_name,name,priority,direction,access,protocol,source_application_security_groups,destination_application_security_groups,source_port_range,destination_port_range,source_address_prefix,destination_address_prefix
+nsg-web,AllowHTTP,1010,Inbound,Allow,Tcp,,,*,80,*,*
+nsg-web,AllowHTTPS,1020,Inbound,Allow,Tcp,,,*,443,*,*
+nsg-app,AllowSSH,1030,Inbound,Allow,Tcp,,,*,22,*,*
+nsg-app,Allow-Web-To-App,1050,Inbound,Allow,Tcp,asg-web,asg-app,*,8080,,*
+nsg-web,Allow-All-Internet-Outbound,1000,Outbound,Allow,*,,,*,*,*,*
+nsg-web,Allow-All,1010,Outbound,Allow,*,,,*,*,*,*
+nsg-aci,Deny-Placeholder,4096,Inbound,Deny,*,,,*,*,*,*

@@ -2,7 +2,7 @@
 # Network Security Group CSV
 ###############################################################
 locals {
-  csv_nsg = csvdecode(file("${path.module}/data/03-nsg_rules.csv"))
+  csv_nsg = csvdecode(file("${path.module}/data/03-network_security_group.csv"))
   csv_nsg_rules = {
     for nsg in distinct([
       for rule in local.csv_nsg : rule.nsg_name

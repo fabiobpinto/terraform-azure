@@ -13,6 +13,9 @@ variable "tags" {
   description = "A map of tags to assign to the resource group."
 }
 
+###############################################################
+# Virtual Network
+###############################################################
 variable "vnet_name" {
   type        = string
   description = "The Vnet name"
@@ -23,20 +26,21 @@ variable "vnet_address_space" {
   description = "The address space for the virtual network."
 }
 
+###############################################################
+# Subnets
+###############################################################
 variable "subnets" {
+  description = "Subnet configuration."
   type = map(object({
     name             = string
     address_prefixes = list(string)
-
+    nsg_name         = optional(string)
     delegation = optional(object({
       name = string
-
       service_delegation = object({
         name    = string
-        actions = optional(list(string))
+        actions = list(string)
       })
     }))
   }))
-
-  description = "The address space of Subnets"
 }
