@@ -12,3 +12,5 @@ tags = {
   owner       = "Fabio Brito Pinto"
   project     = "CSV Input Lab"
 }
+
+environment = "prd"

@@ -5,10 +5,18 @@ locals {
   ###############################################################
 
   delegation_actions = {
-    "Microsoft.ContainerInstance/containerGroups" = ["Microsoft.Network/virtualNetworks/subnets/action"]
-    "Microsoft.Web/serverFarms"                   = ["Microsoft.Network/virtualNetworks/subnets/action"]
-    "Microsoft.Sql/managedInstances"              = ["Microsoft.Network/virtualNetworks/subnets/action"]
-    "Microsoft.App/environments"                  = ["Microsoft.Network/virtualNetworks/subnets/action"]
+    "Microsoft.ContainerInstance/containerGroups" = [
+      "Microsoft.Network/virtualNetworks/subnets/action"
+    ]
+    "Microsoft.Web/serverFarms" = [
+      "Microsoft.Network/virtualNetworks/subnets/action"
+    ]
+    "Microsoft.Sql/managedInstances" = [
+      "Microsoft.Network/virtualNetworks/subnets/action"
+    ]
+    "Microsoft.App/environments" = [
+      "Microsoft.Network/virtualNetworks/subnets/action"
+    ]
   }
 
   ###############################################################

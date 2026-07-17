@@ -2,7 +2,7 @@
 ### Backup Policies
 ########################################################################
 module "backup" {
-  source   = "../../modules/backup_vault"
+  source   = "../../modules/backup"
   for_each = local.backup_policies
   rg_name  = module.rg.rg_name
   location = module.rg.location
